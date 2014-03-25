@@ -19,20 +19,13 @@ namespace Taschenrechner
         public Form1()
         {
             InitializeComponent();
-            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
+        {}
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
- 
+        {}
 
         private void zahl_Click(object sender, EventArgs e)
         {
@@ -41,8 +34,6 @@ namespace Taschenrechner
             if (result.Text == "0" && b.Text == ",") { result.Text = "0"; }
             else if (result.Text.Contains(",") && b.Text == ",") { return; } 
             else if((result.Text == "0") || (zeichen_betätigt)) {result.Clear();}
-
-
           
             result.Text = result.Text + b.Text;
             
@@ -53,15 +44,19 @@ namespace Taschenrechner
         {
             Button b = (Button)sender;
 
-            zeichen = b.Text;
+            // "rechnung_click" ruft hier die Methode "Rechnung" auf
+            this.Rechnung(b.Text);
+        }
+
+        // Alter Inhalt aus "rechung_click" ausgelagert
+        private void Rechnung(String operatorString)
+        {
+            zeichen = operatorString;
             Zahl = Double.Parse(result.Text);
 
             label1.Text = Zahl + " " + zeichen;
 
             zeichen_betätigt = true;
-
-            
-
         }
 
         private void CE_Click(object sender, EventArgs e)
@@ -75,31 +70,26 @@ namespace Taschenrechner
         {
             label1.Text = "";
 
-   
-
             switch (zeichen)
-            {      
-            case "+":
-                    result.Text = (Zahl + Double.Parse(result.Text)).ToString ();
-                    break;
+            {    
+                case "+":
+                        result.Text = (Zahl + Double.Parse(result.Text)).ToString ();
+                        break;
 
-            case "-":
-                    result.Text = (Zahl - Double.Parse(result.Text)).ToString ();
-                    break;
-            case "*":
-                    result.Text = (Zahl * Double.Parse(result.Text)).ToString ();
-                    break;
-            case "/":
-                    result.Text = (Zahl / Double.Parse(result.Text)).ToString ();
-                    break;
-
+                case "-":
+                        result.Text = (Zahl - Double.Parse(result.Text)).ToString ();
+                        break;
+                case "*":
+                        result.Text = (Zahl * Double.Parse(result.Text)).ToString ();
+                        break;
+                case "/":
+                        result.Text = (Zahl / Double.Parse(result.Text)).ToString ();
+                        break;
                 default:
                     break;
-                    }
-            
+            }
 
             zeichen_betätigt = true;
-
         }
 
   
@@ -115,20 +105,16 @@ namespace Taschenrechner
             if (Double.Parse(result.Text) < 0) { result.Text = Math.Abs(Double.Parse(result.Text)).ToString(); }
             else if (Double.Parse(result.Text) > 0) { result.Text = (Double.Parse(result.Text)*-1).ToString(); }
             else { result.Text = result.Text; }
-           
-            
-
-           
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            MessageBox.Show(e.KeyChar.ToString(), "KeyPress");
+            // Prüft, ob Inahlt von "e.KeyChar" + oder * oder / oder - enthält 
+            if(e.KeyChar.ToString().IndexOfAny("+*/-".ToCharArray()) != -1)
+                // Wenn ja, dann rufe "Rechnung" mit "e.KeyChar" auf
+                this.Rechnung(e.KeyChar.ToString());
+
+            // MessageBox.Show(e.KeyChar.ToString(), "KeyPress");
         }
-
-      
-      
-
-      
     }
 }

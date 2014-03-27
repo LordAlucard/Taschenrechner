@@ -110,9 +110,9 @@ namespace Taschenrechner
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Prüft, ob Inahlt von "e.KeyChar" + oder * oder / oder - enthält 
-            if(e.KeyChar.ToString().IndexOfAny("+*/-".ToCharArray()) != -1)
-                // Wenn ja, dann rufe "Rechnung" mit "e.KeyChar" auf
-                this.Rechnung(e.KeyChar.ToString());
+            if (e.KeyChar.ToString().IndexOfAny("+*/-".ToCharArray()) == 0)
+            // Wenn ja, dann rufe "Rechnung" mit "e.KeyChar" auf
+            { this.Rechnung(e.KeyChar.ToString()); }
 
             // MessageBox.Show(e.KeyChar.ToString(), "KeyPress");
         }
